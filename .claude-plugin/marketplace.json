@@ -7,13 +7,14 @@
   },
   "plugins": [
     {
-      "name": "scrollcraft",
-      "source": "./plugins/scrollcraft",
-      "description": "Build a premium, scroll-driven interactive landing page: scroll becomes the timeline, video scrubs under the wheel, and the page verifies itself by screenshotting its own scroll.",
+      "name": "nateherk-design",
+      "source": "./plugins/nateherk-design",
+      "description": "scrollcraft: build a premium, scroll-driven interactive landing page. Scroll becomes the timeline, and the page verifies its own contrast, motion and accessibility by screenshotting itself.",
       "version": "0.2.0",
       "author": {
         "name": "Nate Herk"
-      }
+      },
+      "license": "MIT"
     }
   ]
 }

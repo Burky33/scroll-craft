@@ -1,21 +1,65 @@
 # scrollcraft
 
-A Claude Code skill for building premium, scroll-driven interactive landing
-pages. Scroll becomes the timeline: video scrubs frame by frame under the wheel,
-sections pin and advance, rails pan sideways, headlines assemble line by line,
-and the pointer moves things that are not scrolling.
+**A Claude Code skill that builds premium, scroll-driven websites — and holds them to a real design standard.**
 
-It is not a template. The skill interviews you first, then picks a **page
-grammar** and invents a **signature move**, and it runs a fingerprint gate to
-prove the result is not a re-skin of something already built.
+Most AI website output fails in one of two directions. It is either well behaved and forgettable, or it is a flashy scroll animation with 2.1:1 body text, a headline that wraps to six lines on a phone, and the same six sections every other AI page has. scrollcraft is built to fail neither way: it treats **interaction** and **craft** as one job rather than two.
 
-Every build ends by verifying itself: a headless browser walks the page at every
-scroll position, waits for the playhead to settle, and reports dead scroll, cues
-that never reach full opacity, and text contrast measured on the composited page
-at the brightest frame under each line.
+[![MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
+[![Claude Code plugin](https://img.shields.io/badge/Claude%20Code-plugin-d97757.svg)](https://code.claude.com/docs/en/plugins)
 
-> **Status: private, v0.2.0.** It works, it has produced twelve finished sites,
-> and as of this version it is portable: nothing assumes the author's machine.
+---
+
+## Three builds, three completely different pages
+
+Same skill, same engine, no shared skeleton. The differences below are not themes — they are different page grammars, different navigation models, different endings.
+
+### Orrery · a travel practice
+One unbroken world. The whole page is a single fixed stage: you fall into a handmade scale model of the Earth, land in Kyoto, cross to Patagonia and the Sahara, and rise back to the workbench you started on. No section boundaries anywhere.
+
+![Orrery, a continuous-world scroll flight](media/orrery.webp)
+
+### PERKFORM · a protein coffee
+A filmic one-shot that hard-cuts to two full-bleed inverted grounds mid-page. Loud, product-forward, and the only one of the three that raises its voice.
+
+![PERKFORM, a filmic one-shot product page](media/perkform.webp)
+
+### Fallowbank · a landscape design-build studio
+Quiet, documentary, restrained. Museum-label copy over real photography, and a close that is a line of running text rather than a button.
+
+![Fallowbank, a restrained documentary page](media/fallowbank.webp)
+
+---
+
+## What it actually does
+
+**Interaction, engagement, and being unrepeatable**
+
+- **Scroll is the timeline.** Video scrubs frame by frame under the wheel, sections pin while their argument advances, rails pan sideways, headlines assemble line by line, the page ground shifts colour as you travel, and the pointer moves things that are not scrolling.
+- **Eight mutually exclusive page grammars.** Filmic one-shot, chaptered editorial, live surface, continuous world, typographic poster, gallery, split stage, rhythmic cutlist. Each one *forbids* what the others require, so two builds cannot quietly converge.
+- **A required signature move.** Every build invents one bespoke interaction that exists on that site alone. A recoloured spotlight does not count.
+- **A fingerprint gate.** A new build must differ from every page you have already made on at least 4 of 6 dimensions: grammar, nav, hero, act shape, close, signature move. Fail it and you change the plan, not the record.
+
+**Craft, and how the page actually feels**
+
+- **A feeling curve before any act exists.** One line per act: the emotion, then what on screen causes it. Two adjacent acts with the same feeling means one is filler.
+- **One engineered peak.** Peak-end rule, applied literally. The peak gets the asset budget, the silence in front of it, and the most scroll room. A page with three peaks has none.
+- **A typography floor.** Two families maximum, tracking that tightens as size grows, 45–75ch measure, line height inverse to measure, and light-on-dark compensated on three axes.
+- **A spacing scale with actual rhythm.** 4px base, more space above a heading than below it, fluid section padding so a phone does not inherit desktop air.
+- **Colour with six roles and one accent**, secondary text tinted rather than flat grey, no pure black, and a documented escape for pages that hard-cut between light and dark grounds.
+- **Depth as five tools, not one.** Offset shadows, edge light, scale-and-blur as distance, overlap, and grain.
+- **Brand guidelines are inputs, not decoration.** Point it at a brand kit and its hard rules win, including rules that forbid things the skill would otherwise reach for.
+- **A refuse list.** Identical feature-card grids, `01 / 06` counters, scroll cues, gradient text, em dashes, invented statistics, fake dashboards, AI-purple gradients, and the cream-and-brass artisan palette every craft brand defaults to.
+
+**It checks its own work**
+
+A headless browser walks the finished page at every scroll position, waits for the video playhead to settle, and reports:
+
+- **dead scroll** — scroll that changes nothing on screen
+- **cues that never reach full opacity** — copy the reader can only ever see faded
+- **contrast measured on the composited page**, per line, at the brightest frame that ever passes under it, with the direction picked per line so light-on-dark and dark-on-light are both graded correctly
+- **legs stuck on a poster** — a clip that silently never decoded, which looks exactly like a paused film
+
+Then it writes a contact sheet, because a machine can prove a page works and cannot tell you it means anything.
 
 ---
 
@@ -25,87 +69,86 @@ at the brightest frame under each line.
 /plugin marketplace add nateherkai/scroll-craft
 ```
 ```bash
-/plugin install scrollcraft@nateherk
+/plugin install nateherk-design@nateherk
+```
+
+Then use it by describing what you want, or invoke it directly:
+
+```
+/nateherk-design:scrollcraft
 ```
 
 If the install summary says `Run /reload-plugins to activate.`, run that.
 
-To work on the skill itself without installing:
+To hack on the skill without installing:
 
 ```bash
-claude --plugin-dir ./plugins/scrollcraft
+claude --plugin-dir ./plugins/nateherk-design
 ```
 
 ## First run
 
 ```bash
-node scripts/doctor.mjs            # preflight: tells you exactly what is missing
+node scripts/doctor.mjs              # preflight: says exactly what is missing
 node scripts/workspace.mjs --ensure  # creates your workspace and an empty registry
 ```
 
-`doctor` is worth running before anything else. The three most common setup
-faults all surface later as misleading errors otherwise: a stripped ffmpeg
-reports a missing filter as a syntax error in your command, a missing webp muxer
-reports as a bad filename, and `playwright-core` resolves from the wrong
-directory.
-
-## The workspace
-
-Your builds and your fingerprint registry live in one directory, resolved rather
-than assumed. First hit wins:
-
-1. `SCROLLCRAFT_HOME`
-2. the nearest `.scrollcraft.json` walking up from the current directory:
-   ```json
-   { "workspace": "path/to/wherever/you/keep/builds" }
-   ```
-3. `<project root>/scrollcraft`, where the project root is the nearest ancestor
-   holding a `.git`
-
-So a build lands in `<workspace>/builds/<name>/` and your registry is
-`<workspace>/FINGERPRINTS.md`. If you already keep builds somewhere, point a
-`.scrollcraft.json` at it and nothing moves.
-
-**Your registry starts empty, and that is correct.** The fingerprint gate exists
-to stop you repeating *yourself*. Your first build has nothing to clear; every
-build after it does. `EXAMPLES.md` in this repo is the author's twelve-row
-table, included so you can see what a filled registry looks like and which
-shapes tend to collide. It is illustration, not constraint.
+Run `doctor` before anything else. The three most common setup faults all surface later as misleading errors otherwise: a stripped ffmpeg reports a missing filter as a syntax error in *your* command, a missing WebP muxer reports as a bad filename, and `playwright-core` resolves from the wrong directory.
 
 ## Requirements
 
-| Requirement | Why | Notes |
+| | Why | Notes |
 | --- | --- | --- |
-| Node 18+ | every script | |
-| **A full ffmpeg build** | encoding clips for scrubbing, extracting posters and seam frames | A stripped ffmpeg (some toolchains ship one with ~50 filters) fails in ways that read as syntax errors. `doctor` finds a real build if one exists; `SCROLLCRAFT_FFMPEG` overrides. |
-| `playwright-core` + Chrome | the verification harness | `npm i playwright-core` **in the build folder** |
-| `KIE_AI_API_KEY` | **only** if generating imagery | See `.env.example`. A build from your own photos and footage needs no key and no spend, and it is a first-class route. |
+| **Node 18+** | every script | |
+| **A full ffmpeg build** | encoding clips so they *scrub* rather than play | Some toolchains put a stripped ffmpeg on PATH with ~50 filters and no `scale`. `doctor` finds a real build if one exists; `SCROLLCRAFT_FFMPEG` overrides. |
+| **`playwright-core` + Chrome** | the verification pass | `npm i playwright-core` **in the build folder** |
+| **`KIE_AI_API_KEY`** | only if you want assets *generated* | Optional. Building from your own photos and footage needs no key and no spend, and it is a first-class route. See `.env.example`. |
+
+## The workspace
+
+Your builds and your fingerprint registry live in one directory, resolved rather than assumed. First hit wins:
+
+1. `SCROLLCRAFT_HOME`
+2. the nearest `.scrollcraft.json` walking up from the current directory: `{ "workspace": "path/to/builds" }`
+3. `<project root>/scrollcraft`
+
+Builds land in `<workspace>/builds/<name>/`; your registry is `<workspace>/FINGERPRINTS.md`.
+
+**Your registry starts empty, and that is correct.** The gate exists to stop you repeating *yourself*, so your first build has nothing to clear and every build after it does. [`EXAMPLES.md`](EXAMPLES.md) is the author's twelve-row table, included so you can see what a filled registry looks like and which shapes tend to collide. It is illustration, not constraint.
+
+## What is in here
+
+```
+plugins/nateherk-design/
+└── skills/scrollcraft/
+    ├── SKILL.md            the procedure: interview, grammar, score, build, verify
+    ├── references/
+    │   ├── uniqueness.md   eight page grammars, the signature move, the fingerprint gate
+    │   ├── feel.md         the feeling curve, the engineered peak, the feel check
+    │   ├── devices.md      nine scroll devices and the cue contract
+    │   ├── worldflight.md  continuous-world mode: one fixed stage, no seams
+    │   ├── worlds.md       art direction, and the style-preamble method
+    │   ├── taste.md        the design floor: spacing, type, colour, depth, motion
+    │   ├── assets.md       generation, camera moves, encoding for scrubbing
+    │   ├── verify.md       the harness, and what it cannot tell you
+    │   └── template.html   a starting skeleton, not a layout
+    ├── engine/             scrollcraft.js + .css. The mechanism, never edited per project
+    ├── templates/          the empty registry a new workspace is seeded from
+    └── scripts/            doctor · workspace · kie · encode · serve · shoot · worldflight-assert
+```
+
+[`CHANGELOG.md`](plugins/nateherk-design/skills/scrollcraft/CHANGELOG.md) is worth reading on its own: it records what broke on each build and the rule that came out of it, rather than a feature list.
 
 ## The one rule that matters most
 
-The engine is the mechanism and it is never edited per project. Theme it with
-six colour tokens and two fonts, write your own semantic HTML, and drive
-anything bespoke off the `--sc-p` custom property the engine publishes. A
-runtime that builds the page from a config object is exactly why every site
-built on one looks the same.
+The engine is the mechanism and it is **never edited per project**. Theme it with six colour tokens and two fonts, write your own semantic HTML, and drive anything bespoke off the `--sc-p` custom property the engine publishes. A runtime that builds the page from a config object is exactly why every site built on one looks the same.
 
-## Known gaps
+## Honest limitations
 
-Fixed in v0.2.0: hardcoded author paths, the shared fingerprint registry, the
-missing preflight, and the unshipped worldflight rig.
-
-Still open:
-
-1. **No licence yet.** See below.
-2. **Windows-first path guesses.** `doctor` and `encode.sh` look for ffmpeg in
-   WinGet, Homebrew and `/usr/local` locations. Other setups need
-   `SCROLLCRAFT_FFMPEG`.
-3. **Not tested on macOS or Linux.** Every build so far ran on Windows.
+- **Only ever run on Windows.** The scripts look for ffmpeg and Chrome in Windows, macOS and Linux locations, but no build has been done on a Mac. `SCROLLCRAFT_FFMPEG` and `SCROLLCRAFT_CHROME` override the search.
+- **Generated video is not free.** A ten-leg continuous-world flight is a real spend. A page built from your own assets costs nothing.
+- **It is opinionated on purpose.** It will refuse the layouts and palettes that make AI pages recognisable, and it will argue with you about your peak. If you want a page that looks like everything else, this is the wrong tool.
 
 ## Licence
 
-**Not yet licensed. All rights reserved.**
-
-This is deliberate, not an oversight. The engine is the reusable part and the
-licence choice is a business decision: a permissive licence buys adoption, a
-source-available one protects the asset. Pick one before this repo goes public.
+MIT. See [LICENSE](LICENSE).

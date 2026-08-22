@@ -13,6 +13,9 @@ dist/
 *.mp4
 *.mov
 *.webm
+# media/ holds the small looping WebP demos used by the README. They are the
+# only committed media, and they are deliberately not video files.
+!media/*.webp
 
 # Node
 node_modules/
