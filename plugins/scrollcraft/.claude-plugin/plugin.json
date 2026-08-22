@@ -1,0 +1,10 @@
+{
+  "name": "scrollcraft",
+  "description": "Build a premium, scroll-driven interactive landing page for any business. Interviews the human first, picks a page grammar and a signature move so no two builds share a skeleton, generates or grades the assets, writes real semantic HTML on a token-driven design floor, and verifies the result by screenshotting its own scroll.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Nate Herk"
+  },
+  "homepage": "https://github.com/nateherkai/scroll-craft",
+  "repository": "https://github.com/nateherkai/scroll-craft"
+}
