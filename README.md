@@ -69,7 +69,7 @@ Then it writes a contact sheet, because a machine can prove a page works and can
 /plugin marketplace add nateherkai/scroll-craft
 ```
 ```bash
-/plugin install nateherk-design@nateherk
+/plugin install nateherk-design
 ```
 
 Then use it by describing what you want, or invoke it directly:
