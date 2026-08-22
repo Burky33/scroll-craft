@@ -65,6 +65,7 @@ const candidates = [
   "/usr/local/bin/ffmpeg",
   "/opt/homebrew/bin/ffmpeg",
   "/usr/bin/ffmpeg",
+  "/snap/bin/ffmpeg",
 ].filter(Boolean);
 
 let ffmpeg = null, filterCount = 0;
@@ -102,10 +103,20 @@ add("verify", "playwright-core", pw, pwWhere,
 
 const chrome = [
   process.env.SCROLLCRAFT_CHROME,
+  // Windows
   "C:/Program Files/Google/Chrome/Application/chrome.exe",
   "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
+  "C:/Program Files/Microsoft/Edge/Application/msedge.exe",
+  // macOS
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "/Applications/Chromium.app/Contents/MacOS/Chromium",
+  "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
+  // Linux
   "/usr/bin/google-chrome",
+  "/usr/bin/google-chrome-stable",
+  "/usr/bin/chromium",
+  "/usr/bin/chromium-browser",
+  "/snap/bin/chromium",
 ].find((p) => p && fs.existsSync(p));
 add("verify", "Chrome", Boolean(chrome), chrome || "not found",
   "Install Chrome, or set SCROLLCRAFT_CHROME to an executable.");

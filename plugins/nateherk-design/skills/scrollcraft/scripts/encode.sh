@@ -35,7 +35,7 @@ pick_ffmpeg() {
     "${SCROLLCRAFT_FFMPEG:-}" \
     "$(command -v ffmpeg 2>/dev/null || true)" \
     "${HOME:-/nonexistent}"/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_*/ffmpeg-*-full_build/bin/ffmpeg.exe \
-    /usr/local/bin/ffmpeg /opt/homebrew/bin/ffmpeg
+    /usr/local/bin/ffmpeg /opt/homebrew/bin/ffmpeg /usr/bin/ffmpeg /snap/bin/ffmpeg
   do
     [ -n "$cand" ] && [ -x "$cand" ] || continue
     if [ "$("$cand" -hide_banner -filters 2>/dev/null | wc -l)" -gt 200 ]; then
