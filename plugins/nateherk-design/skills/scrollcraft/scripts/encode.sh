@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# scrollcraft — encode a clip for scrubbing, not for playback.
+# scrollcraft: encode a clip for scrubbing, not for playback.
 #
 # A normal web encode puts a keyframe every 2-5 seconds. Scrubbing seeks to an
 # arbitrary time, and the decoder must walk from the previous keyframe to get

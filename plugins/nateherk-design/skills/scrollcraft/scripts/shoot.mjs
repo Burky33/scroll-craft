@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * scrollcraft verification harness — shoot the page's own scroll.
+ * scrollcraft verification harness: shoot the page's own scroll.
  *
  * Walks the page in N evenly spaced scroll positions, waits for the scrub video
  * to actually settle at each one, screenshots it, and reports what the engine

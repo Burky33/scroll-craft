@@ -34,7 +34,7 @@ It samples **within each act** (default 6 positions per act) rather than
 uniformly down the document. Uniform sampling moves every position whenever you
 change any section's height, so findings appear and vanish with unrelated edits.
 
-**DEAD SCROLL** — consecutive positions where nothing changed: no cue moved, no
+**DEAD SCROLL**: consecutive positions where nothing changed: no cue moved, no
 clip time advanced, no rail travelled, no wipe progressed, no stage shifted.
 Real dead scroll means the reader is turning the wheel and being given nothing.
 Fix by shortening the act's span or adding a cue.
@@ -54,7 +54,7 @@ resolved hold, set `data-sc-verify-hold="true"` only while the hold is active.
 Reduced-motion fixed stages may use the same attribute for deliberately stable
 frames, which still require manual contact-sheet review.
 
-**FROZEN CLIP** — a scrub stage is on screen, the reader is scrolling, and the
+**FROZEN CLIP**: a scrub stage is on screen, the reader is scrolling, and the
 clip's playhead is not moving. Dead scroll cannot see this, because the stage
 itself *is* moving: a still photograph is sliding up the page, which is the
 worst-looking failure this kit can produce and the one that most reliably makes
@@ -74,7 +74,7 @@ whole visible life by default. A page that reports this has usually opted out
 with `data-sc-clip-map="travel"`, or is running an engine copy from before that
 default existed. See [devices.md §1](devices.md).
 
-**CUES THAT NEVER PEAK** — an element that never reaches full opacity anywhere.
+**CUES THAT NEVER PEAK**: an element that never reaches full opacity anywhere.
 Usually a cue window too narrow for its act, or ramps that eat the whole window.
 Widen the window or set explicit ramps. A kinetic heading is read through its
 line units, not through the element: the engine forces the element itself to
@@ -82,7 +82,7 @@ opacity 1 and carries the real value on `.sc-split__i`, so reading the element
 reports every kinetic headline as fully present even on frames where every line
 is at 0.
 
-**CONTRAST** — measured on the **composited page**, not on the source video. The
+**CONTRAST**: measured on the **composited page**, not on the source video. The
 harness hides the text, re-shoots the same frame, and samples the real
 background under each line, so scrims, gradients and blends are all included.
 Elements with their own opaque background are graded against that fill instead.
@@ -116,7 +116,7 @@ the raw film every time.
 
 The tell is unmistakable once you know it: **you strengthen the scrim and the
 reported numbers do not move at all.** Not "improve slightly", not "move by a
-tenth" — byte-identical, because the thing you changed was never in the
+tenth": byte-identical, because the thing you changed was never in the
 measurement. If a contrast number is unchanged to two decimals after a real
 change, stop tuning and check what is actually being composited.
 
@@ -171,7 +171,7 @@ Real, and worth knowing before you trust a green run:
   scroll detected`. Measure `rail.scrollWidth - innerWidth` yourself; a green run
   does not cover it. See devices.md §3.
 
-**Console errors and failed requests** — a 404 on a clip degrades to a poster
+**Console errors and failed requests**: a 404 on a clip degrades to a poster
 silently, which looks fine and is not.
 
 ---

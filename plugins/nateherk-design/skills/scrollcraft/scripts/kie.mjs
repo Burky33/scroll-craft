@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * scrollcraft asset generator — kie.ai unified jobs API.
+ * scrollcraft asset generator: kie.ai unified jobs API.
  *
  *   POST https://api.kie.ai/api/v1/jobs/createTask   { model, input }
  *   GET  https://api.kie.ai/api/v1/jobs/recordInfo?taskId=...

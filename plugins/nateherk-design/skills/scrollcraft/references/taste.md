@@ -139,7 +139,7 @@ trap is that overriding only one of them in CSS leaves the other resolving to th
 attribute's raw pixel value, so `width: 100%` on a 1920x1080 image inside a
 narrow column renders it 1080px tall and pushes everything under it off the fold.
 It looks like a layout bug three elements away from its cause. **Override both or
-neither** — usually `width: 100%; height: auto`, or an explicit height plus
+neither**, usually `width: 100%; height: auto`, or an explicit height plus
 `object-fit: cover` when the frame's shape is the design.
 
 And the positive case behind all three: when a photographic ground sits behind a

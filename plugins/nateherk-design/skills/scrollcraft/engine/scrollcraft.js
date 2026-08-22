@@ -1,5 +1,5 @@
 /* ============================================================================
-   scrollcraft — a scroll-driven interaction runtime
+   scrollcraft: a scroll-driven interaction runtime
    ----------------------------------------------------------------------------
    Vanilla JS. Zero dependencies. Zero DOM generation.
 
@@ -10,7 +10,7 @@
    identical, which is the failure mode this replaces.
 
    ---------------------------------------------------------------------------
-   ACTS — the unit of scroll time
+   ACTS: the unit of scroll time
    ---------------------------------------------------------------------------
      <section data-sc-act="pin" data-sc-span="2.5"> ... </section>
 
@@ -38,7 +38,7 @@
      and publishes it as --sc-p on the act element, so CSS can read it too.
 
    ---------------------------------------------------------------------------
-   DEVICES — what p drives
+   DEVICES: what p drives
    ---------------------------------------------------------------------------
      data-sc-scrub            on <video>. p scrubs currentTime. Blob-loaded, so
                               it seeks without needing HTTP range support.
@@ -63,7 +63,7 @@
                               while the act is on screen.
 
    ---------------------------------------------------------------------------
-   WORLDFLIGHT — the page mode for one continuous flight
+   WORLDFLIGHT: the page mode for one continuous flight
    ---------------------------------------------------------------------------
      <div data-sc-mode="worldflight" data-sc-seam="0.12">
        <div data-sc-world>
@@ -105,7 +105,7 @@
    black frame and a black frame is the cut this mode exists to avoid.
 
    ---------------------------------------------------------------------------
-   POINTER — interactivity that isn't scroll
+   POINTER: interactivity that isn't scroll
    ---------------------------------------------------------------------------
      data-sc-tilt="8"         3D tilt toward the pointer, spring-damped, degrees.
      data-sc-magnet="0.35"    element drifts toward the pointer inside its bounds.

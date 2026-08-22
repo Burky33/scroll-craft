@@ -12,7 +12,7 @@ against that variable. Reach for that before asking for a new device.
 
 ---
 
-## 1. `scrub` — the wheel is a scrubber
+## 1. `scrub`: the wheel is a scrubber
 
 The anchor device. A pre-rendered camera move plays under the reader's hand,
 one frame per notch. This is the thing people screenshot and send to each other,
@@ -93,7 +93,7 @@ the clip reads as a stutter rather than a glide. Three mechanisms, all on by
 default:
 
 - **Lerp 0.18 per frame.** `data-sc-lerp` overrides it, on the mount root for the
-  whole page or on one `<video>`. Clamped to 0.02–1, and never read as 0, since
+  whole page or on one `<video>`. Clamped to 0.02 to 1, and never read as 0, since
   a 0 lerp is a playhead that never moves. Reach for it only when a page's clips
   are short enough that 0.18 visibly lags the hand. Under reduced motion the
   rate is 1.0, which is no smoothing at all.
@@ -110,7 +110,7 @@ mid-lerp is a frame the page never actually holds.
 
 ---
 
-## 2. `pin` — the frame holds, the content advances
+## 2. `pin`: the frame holds, the content advances
 
 The workhorse, and the cheapest premium effect there is. The stage sticks for a
 few viewport-heights while copy states cross over inside it. Use it when the
@@ -184,7 +184,7 @@ Rules the verification pass will catch you on:
 
 ---
 
-## 3. `pan` — vertical scroll, lateral travel
+## 3. `pan`: vertical scroll, lateral travel
 
 Sideways movement reads as *breadth* where vertical reads as *argument*. Use it
 for a range, a lineup, a timeline. Do not use it for a hierarchy: the first item
@@ -256,7 +256,7 @@ reference build relays its three phases out as a grid at desktop widths).
 
 ---
 
-## 4. `reveal` — a wipe is a change of state
+## 4. `reveal`: a wipe is a change of state
 
 `clip-path` eating in from an edge. It costs nothing and it reads as
 transformation, which makes it right for the beat where something becomes
@@ -285,7 +285,7 @@ audit catches this; only a rendered screenshot does.
 
 ---
 
-## 5. `kinetic` — type that assembles
+## 5. `kinetic`: type that assembles
 
 Splits a heading into lines, words or characters and staggers them across the
 cue window. Lines are almost always right; words for a short punch line;
@@ -311,7 +311,7 @@ exists to avoid.
 
 ---
 
-## 6. `parallax` — layers at different rates
+## 6. `parallax`: layers at different rates
 
 Depth from differential movement. Subtle or nothing: past roughly 200px of total
 travel it stops reading as depth and starts reading as a bug.
@@ -336,7 +336,7 @@ should not move relative to the thing they are reading it against.
 
 ---
 
-## 7. `count` — numbers that land
+## 7. `count`: numbers that land
 
 ```html
 <span class="sc-nums" data-sc-count="0 4200" data-sc-count-at="0.1 0.5">0</span>
@@ -361,7 +361,7 @@ Real brand, real stats, or a different device.
 
 ---
 
-## 8. `flow` + `in` — ordinary sections, done well
+## 8. `flow` + `in`: ordinary sections, done well
 
 Not everything should be pinned. A page of nothing but pinned acts is
 exhausting, and the contrast is what makes the pinned ones land. Normal
@@ -389,7 +389,7 @@ the first reveal near `p = 0`.
 
 ---
 
-## 9. Pointer devices — interactivity that is not scroll
+## 9. Pointer devices: interactivity that is not scroll
 
 Scroll is a one-dimensional input. A page that only responds to scroll is a
 film. These make it respond to the reader being *present*.
@@ -400,10 +400,10 @@ film. These make it respond to the reader being *present*.
 <section data-sc-spotlight>…</section>
 ```
 
-- `tilt` — 3D rotation toward the pointer. 5 to 9 degrees. Past 12 it is a toy.
-- `magnet` — the element drifts toward the pointer. 0.2 to 0.35. Primary CTA
+- `tilt`: 3D rotation toward the pointer. 5 to 9 degrees. Past 12 it is a toy.
+- `magnet`: the element drifts toward the pointer. 0.2 to 0.35. Primary CTA
   only; a page of magnetic elements is unusable.
-- `spotlight` — publishes `--sc-mx` / `--sc-my` for a light that follows the
+- `spotlight`: publishes `--sc-mx` / `--sc-my` for a light that follows the
   pointer across a surface.
 
 **`magnet`, `parallax` and `cue` all write `transform`, so they cannot share an
@@ -421,7 +421,7 @@ motion, so touch never fires a false hover.
 
 ---
 
-## 10. `drift` — the ground moves with you
+## 10. `drift`: the ground moves with you
 
 Not an act. A property of acts, and the thing that makes a page feel like one
 continuous place rather than a stack of slides.

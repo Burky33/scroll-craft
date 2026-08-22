@@ -57,7 +57,7 @@ Four rules follow from that, and they are the spine of this skill:
    deliberately or every build inherits the same skeleton. The first four builds
    did exactly that. Read [references/uniqueness.md](references/uniqueness.md).
 
-## Step 0 — The interview
+## Step 0: The interview
 
 **Always interview the human before generating anything.** Not a brief you
 inferred from the brand name, not a plan you present for approval. Actual
@@ -181,7 +181,7 @@ Copy `engine/scrollcraft.js` and `engine/scrollcraft.css` into the build folder.
 Never edit the engine per-project; it is the mechanism. Theme it with tokens and
 write your own markup.
 
-## Step 1 — The brief, journey first
+## Step 1: The brief, journey first
 
 The subject is the user's to state. Ask it open, in plain prose, never as a
 fabricated multiple-choice list of industries: a made-up menu biases them and
@@ -197,7 +197,7 @@ again. Ask only what you cannot sensibly default:
    everywhere on the page.
 4. **What do you already have?** Logo, palette, photography, product shots,
    footage, a brand doc. Real assets beat generated ones every time.
-5. **Art direction** — offer the worlds in [references/worlds.md](references/worlds.md)
+5. **Art direction**: offer the worlds in [references/worlds.md](references/worlds.md)
    as a real choice, and say they can go their own way.
 
 Then write the **journey** before anything else: four to seven beats, each one a
@@ -217,7 +217,7 @@ however nice the shot is. Show the journey to the user and get it right before
 generating a single asset, because assets are the expensive part and the journey
 determines every one of them.
 
-## Step 2 — Grammar, gate, then score
+## Step 2: Grammar, gate, then score
 
 Three things in order, and the first two come before any act planning. Full
 detail in [references/uniqueness.md](references/uniqueness.md).
@@ -277,7 +277,7 @@ Checks before you build:
 - The act count and total length do not land in the 6-to-7 acts at 13.6-13.8vh
   band that all four prior builds hit. That band is a fingerprint dimension now.
 
-## Step 3 — Generate the assets
+## Step 3: Generate the assets
 
 Full pipeline, prompt scaffolds and model notes: [references/assets.md](references/assets.md).
 
@@ -300,7 +300,7 @@ Three things that decide whether this looks premium or generated:
   seeking walks from the previous keyframe. A normal web encode plays perfectly
   and scrubs like mud.
 
-## Step 4 — Build the page
+## Step 4: Build the page
 
 Write real HTML. Real `<h1>`, real `<p>`, real links, real reading order. The
 engine reads `data-sc-*` attributes off your markup and drives it; it never
@@ -324,7 +324,7 @@ Theme by overriding tokens, six values and two fonts:
 }
 ```
 
-## Step 5 — Verify by scrolling it
+## Step 5: Verify by scrolling it
 
 Not optional, and not "it should work." A scroll page has no single state:
 every position is a different frame, and the failures live between the two you

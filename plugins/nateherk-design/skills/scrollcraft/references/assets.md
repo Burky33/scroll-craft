@@ -27,7 +27,7 @@ trip and the time to work out that the string itself was fine.
 | `16:9` | works | 2736x1520 |
 | `9:16` | works | 1520x2736 |
 | `3:4` | works | 1776x2352 |
-| `4:5` | **rejected** | — |
+| `4:5` | **rejected** | n/a |
 
 The returned pixel dimensions are near the ratio rather than exactly it, so
 derive layout from the file, not from the string you asked for. Treat the table

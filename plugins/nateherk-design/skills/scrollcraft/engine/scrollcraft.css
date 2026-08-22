@@ -1,5 +1,5 @@
 /* ============================================================================
-   scrollcraft.css — the taste floor
+   scrollcraft.css: the taste floor
    ----------------------------------------------------------------------------
    Two layers, and the split matters:
 
@@ -262,7 +262,7 @@ video[data-sc-scrub] { opacity: 0; transition: opacity 380ms var(--sc-ease-out);
 .sc-copy--center { inset-inline: auto; left: 50%; top: 50%; translate: -50% -50%; text-align: center; }
 .sc-copy--trail  { inset-inline: auto; right: var(--sc-gutter); bottom: clamp(3rem, 12vh, 9rem); text-align: right; }
 
-/* cue defaults — the engine writes opacity/transform inline, these are the
+/* cue defaults: the engine writes opacity/transform inline, these are the
    pre-paint state so nothing flashes before the first read() */
 [data-sc-cue] { opacity: 0; will-change: opacity, transform; }
 .sc-ready [data-sc-cue] { transition: none; }

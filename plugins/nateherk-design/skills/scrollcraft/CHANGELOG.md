@@ -4,7 +4,7 @@ Dated notes on what changed in the skill and which build's finding drove it.
 Builds live in `OtherWorlds/Ultimate Websites/builds/`; each carries a
 `BUILD-REPORT.md`.
 
-## 2026-08-22 — bespoke fixed-stage verification state
+## 2026-08-22: bespoke fixed-stage verification state
 
 Driven by the owner's cold-scroll finding on PHASE: "Nothing happens when I
 start scrolling. Like literally nothing's happening in the first couple of
@@ -13,7 +13,7 @@ scenes." The first pass had passed mechanically because the experience used
 Ordinary flow is deliberately excluded from dead-scroll detection, so the
 harness never inspected the stage's visible timeline.
 
-**Harness — `scripts/shoot.mjs`**
+**Harness: `scripts/shoot.mjs`**
 
 - Reads optional `data-sc-verify-state` signatures from bespoke fixed stages
   and includes them in the dead-scroll signature.
@@ -37,14 +37,14 @@ harness never inspected the stage's visible timeline.
 - Act progress no longer clamps early; the close reaches a true 0% divider.
 - Dense six-samples-per-act sheets replaced the earlier coarse pass.
 
-## 2026-08-21 — worldflight mode and the global smoothed playhead
+## 2026-08-21: worldflight mode and the global smoothed playhead
 
 Driven by the owner's verdict on the act-based continuous world: "awful... you're
 literally going from scrolling down to static page and then you start scrolling
 down again... weird clear page lines scrolling up... very cheap looking."
 Mechanics ported from oso95/scroll-world.
 
-**Engine — `engine/scrollcraft.js`**
+**Engine: `engine/scrollcraft.js`**
 
 - New page mode `data-sc-mode="worldflight"`: one `position: fixed` stage, an
   empty spacer as the only element in document flow, legs mounted for the life
@@ -68,7 +68,7 @@ Mechanics ported from oso95/scroll-world.
   same seams and windows, all transforms dropped.
 - **Playhead retrofit, all scrub clips everywhere.** Every clip now lives in one
   `playheads` list walked by one rAF loop: lerp 0.18 per frame (`data-sc-lerp`,
-  clamped 0.02–1, 1.0 under reduced motion), 8ms/20ms deadband, seek coalescing,
+  clamped 0.02 to 1, 1.0 under reduced motion), 8ms/20ms deadband, seek coalescing,
   offscreen clips skipped within 0.002. Replaces the act-only 0.16 loop. Act
   behaviour is otherwise untouched.
 - iOS priming: one muted play-pause across every clip on the first touch or
@@ -79,7 +79,7 @@ Mechanics ported from oso95/scroll-world.
   silent failure as an unpinned act one level worse.
 - Synced byte-identical to all eight build folders and `cmp`-verified.
 
-**Engine — `engine/scrollcraft.css`**
+**Engine: `engine/scrollcraft.css`**
 
 - `.sc-world`, `.sc-world__seg`, `.sc-world__poster`, `.sc-world__copy`,
   `.sc-world__scrim`, `.sc-world__spacer`, and `[data-sc-copy]` pre-paint state.
@@ -87,12 +87,12 @@ Mechanics ported from oso95/scroll-world.
   clip has no ancestor act to light it through.
 - Reduced motion drops the poster push-in and the copy drift.
 
-**Harness — `scripts/shoot.mjs`**
+**Harness: `scripts/shoot.mjs`**
 
 - Detects `[data-sc-mode="worldflight"]` and switches sampling to the track:
   per-leg fractions at the same density as per-act, plus four positions across
   every seam.
-- `settle()` now waits for the playhead to ARRIVE (|cur − target| < 0.002 and not
+- `settle()` now waits for the playhead to ARRIVE (|cur - target| < 0.002 and not
   seeking) via `ScrollCraft.instances`, falling back to the old currentTime-goes-
   quiet method. Without this every worldflight frame is shot mid-lerp and no run
   is repeatable.
@@ -130,9 +130,9 @@ Mechanics ported from oso95/scroll-world.
   maison 4507): all green, frame counts and poster counts identical to the
   pre-change baselines, zero console errors, zero weak cues.
 
-## 2026-08-21 — consolidation after the showcase trio (descent, airfield, maison)
+## 2026-08-21: consolidation after the showcase trio (descent, airfield, maison)
 
-**Engine — `engine/scrollcraft.js`**
+**Engine: `engine/scrollcraft.js`**
 
 - `focusin` now centres a focused control that sits inside a `[data-sc-act]` when
   its own cue computes under 0.85, with `behavior: 'instant'` because
@@ -146,7 +146,7 @@ Mechanics ported from oso95/scroll-world.
   reported case)
 - Synced byte-identical to all eight build folders.
 
-**Harness — `scripts/shoot.mjs`**
+**Harness: `scripts/shoot.mjs`**
 
 - Null guard on the clip's owning act: `(v.closest("[data-sc-act]") ?? v)`. A
   `video[data-sc-scrub]` outside the act stack, which is the legitimate shape for
@@ -154,14 +154,14 @@ Mechanics ported from oso95/scroll-world.
   wrote anything. Confirmed the old expression throws and the new one returns a
   boolean. (descent)
 
-**Encoding — `scripts/encode.sh`**
+**Encoding: `scripts/encode.sh`**
 
 - CRF is now overridable: fourth positional argument, or `SCROLLCRAFT_CRF`,
   positional winning. Defaults unchanged at 20 desktop / 24 mobile, and the
   echoed summary reports the value used. `assets.md` recommends 22-23 for
   grain-heavy worlds, which previously meant not using the script. (descent)
 
-**Docs — `references/devices.md`**
+**Docs: `references/devices.md`**
 
 - §2 `pin`: minimum useful span is ~1.2. At span ≤ 1 a pinned act has one pixel
   of travel, so progress jumps 0 to 1 and every cue and reveal inside it snaps.
@@ -175,7 +175,7 @@ Mechanics ported from oso95/scroll-world.
   instead, which is what a cutlist or chaptered page wants anyway. (airfield,
   with maison's §2.2 conflict resolved the same way)
 
-**Docs — `references/taste.md`**
+**Docs: `references/taste.md`**
 
 - Colour: redefining `--sc-ink` on a subtree does not re-ink text whose `color`
   already computed on `<body>`. Restate `color` on the subtree. (airfield)
@@ -187,14 +187,14 @@ Mechanics ported from oso95/scroll-world.
   attribute's pixel value. The reference template ships both, so this is a trap
   the template hands to every build. (maison)
 
-**Docs — `references/uniqueness.md`**
+**Docs: `references/uniqueness.md`**
 
 - §2.8 rhythmic cutlist: named the peak collision. The grammar bans `pin` and
   `dwell` while feel.md demands the peak hold. Resolution is to hold in the fixed
   chrome layer and keep every act short and unpinned, generalised to "move the
   peak out of the act stack rather than breaking the grammar". (airfield)
 
-**Docs — `references/verify.md`**
+**Docs: `references/verify.md`**
 
 - Cue fade-outs should land between harness sample positions, or the sheet shows
   half-faded type that nothing grades. Fix `rampOut`, not the sampling. (descent)
@@ -204,7 +204,7 @@ Mechanics ported from oso95/scroll-world.
 - Credit accounting: per-call sums overstate real spend, same reason the probe
   delta overstates in the other direction.
 
-**Docs — `references/assets.md`**
+**Docs: `references/assets.md`**
 
 - seedream's aspect ratios: `16:9`, `9:16` and `3:4` verified working, `4:5`
   rejected with an error that does not list the alternatives. Returned pixel
@@ -221,15 +221,15 @@ Desktop and reduced-motion harness passes re-run on descent (4505), airfield
 all cues clear 4.5:1 at their worst frame, no console errors, no failed
 requests, and every clip reports `poster` under reduced motion.
 
-## 2026-08-21 — triage of three parallel builds (nateherk, agency, saas)
+## 2026-08-21: triage of three parallel builds (nateherk, agency, saas)
 
-**Engine — `engine/scrollcraft.js`**
+**Engine: `engine/scrollcraft.js`**
 
 - `data-sc-count` strips thousands separators before parsing, so a target can be
   written the way it should render (`"0 3,500"`). Previously any real figure
   between 1,000 and 9,999 was unrenderable. (nateherk, merged from its local patch)
 
-**Engine — `engine/scrollcraft.css`**
+**Engine: `engine/scrollcraft.css`**
 
 - Reduced motion no longer zeroes a `pan` rail into missing content. The stage
   becomes a native `overflow-x: auto` scroll region with proximity snapping, so
@@ -242,7 +242,7 @@ requests, and every clip reports `poster` under reduced motion.
 - New `.sc-scrim--band` utility: a bottom band, transparent above 58%, for copy
   that spans the frame. (saas)
 
-**Harness — `scripts/shoot.mjs`**
+**Harness: `scripts/shoot.mjs`**
 
 - Cue opacity reads a kinetic heading through its `.sc-split__i` line units. The
   engine forces the element to 1, so kinetic headlines were reported as peaked on
@@ -317,7 +317,7 @@ requests, and every clip reports `poster` under reduced motion.
   single wide track; keyboard focus landing off-screen on pinned acts) and the
   note that a shoot.mjs run can take the background server down with it.
 
-## 2026-08-22 — the `orrery` build (travel, continuous world)
+## 2026-08-22: the `orrery` build (travel, continuous world)
 
 First run of the skill start-to-finish as a new user would meet it: interview
 first, nothing generated until the eight answers existed. Three findings, all

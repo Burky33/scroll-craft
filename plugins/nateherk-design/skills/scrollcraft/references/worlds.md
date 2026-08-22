@@ -27,7 +27,7 @@ the generic diorama look.
 Each is a starting preamble. Tune the light, lens and grade to the brand; keep
 the structure.
 
-### 1. Low-key cinematic — the default
+### 1. Low-key cinematic: the default
 Dark, controlled, one light source. Works for almost anything premium: spirits,
 coffee, tools, apparel, software, professional services.
 
@@ -106,16 +106,16 @@ it is honest about being a diagram. Engineering, hardware, complex services.
 
 Every preamble names five things. Miss one and the set drifts.
 
-1. **Medium and lens** — "35mm anamorphic", "100mm macro", "handheld 35mm".
+1. **Medium and lens**: "35mm anamorphic", "100mm macro", "handheld 35mm".
    This is what sets depth of field and perspective.
-2. **Light** — count the sources and place them. "One warm key, cool ambient
+2. **Light**: count the sources and place them. "One warm key, cool ambient
    fill" is directable. "Beautiful lighting" is not.
-3. **Grade** — the colour story in three words. "Deep charcoal, warm amber,
+3. **Grade**: the colour story in three words. "Deep charcoal, warm amber,
    desaturated mid-tones."
-4. **Texture** — grain, halation, condensation, imperfection. This is what makes
+4. **Texture**: grain, halation, condensation, imperfection. This is what makes
    an image read as photographed rather than generated. Skipping it is the
    single biggest cause of the plastic AI look.
-5. **The negative list** — what it must not be. "NOT 3D render, NOT clay, NOT
+5. **The negative list**: what it must not be. "NOT 3D render, NOT clay, NOT
    illustration, no digital glow, no plastic sheen." Models drift toward
    rendered-looking output; the negative list is what holds them.
 

@@ -339,7 +339,7 @@ belong to any act, so it can unfurl, run a long choreography and hold as long as
 the peak needs while the acts underneath keep cutting at full speed. Drive it
 from page scroll rather than from an act's `--sc-p`, since the whole point is
 that it outlives the act it started in. The airfield build's departures board
-runs its entire peak — unfurl, populate, cascade, reveal, hold, collapse — in
+runs its entire peak (unfurl, populate, cascade, reveal, hold, collapse) in
 the chrome, with no pinned act anywhere on the page and nothing over 1.3vh.
 
 The general form: **when a grammar bans the device your peak wants, move the

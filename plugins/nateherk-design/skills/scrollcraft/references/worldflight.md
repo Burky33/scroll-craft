@@ -1,4 +1,4 @@
-# Worldflight — the continuous-world page mode
+# Worldflight: the continuous-world page mode
 
 Act mode cuts the page into pinned blocks. That is the right shape for a page of
 chapters and the wrong shape for one unbroken camera move, and building a
@@ -57,17 +57,17 @@ the page: a worldflight page has no acts.
 
 | Attribute | On | Default | What it does |
 |---|---|---|---|
-| `data-sc-mode="worldflight"` | mode root | — | Turns the page into one flight. |
+| `data-sc-mode="worldflight"` | mode root | n/a | Turns the page into one flight. |
 | `data-sc-seam` | mode root | `0.12` | Crossfade band, in viewport-heights of scroll. Clamped 0.02 to 0.4. |
-| `data-sc-world` | stage | — | The single fixed stage. Gets `.sc-world`. |
-| `data-sc-segment` | leg | — | One leg. Holds a poster and a clip. |
+| `data-sc-world` | stage | n/a | The single fixed stage. Gets `.sc-world`. |
+| `data-sc-segment` | leg | n/a | One leg. Holds a poster and a clip. |
 | `data-sc-w` | leg | `1.3` | Scroll this leg owns, in viewport-heights. |
 | `data-sc-linger` | leg | `0` | Dwell remap for this leg only. Clamped to 0.6. |
-| `data-sc-waypoint` | leg | — | Label published on the waypoint event. |
-| `data-sc-world-copy` | copy layer | — | Fixed overlay. Gets `.sc-world__copy`. |
-| `data-sc-copy` | copy block | — | A windowed block of type. |
-| `data-sc-window` | copy block | — | `hero` \| `finale` \| `from to [in [out]]`. |
-| `data-sc-spacer` | spacer | — | The scroll track. Engine sets its height. |
+| `data-sc-waypoint` | leg | n/a | Label published on the waypoint event. |
+| `data-sc-world-copy` | copy layer | n/a | Fixed overlay. Gets `.sc-world__copy`. |
+| `data-sc-copy` | copy block | n/a | A windowed block of type. |
+| `data-sc-window` | copy block | n/a | `hero` \| `finale` \| `from to [in [out]]`. |
+| `data-sc-spacer` | spacer | n/a | The scroll track. Engine sets its height. |
 | `data-sc-lerp` | root or `<video>` | `0.18` | Playhead smoothing. See devices.md. |
 
 The engine generates no DOM here, the same as in act mode. It sets the spacer's
@@ -121,12 +121,12 @@ the cut this mode exists to remove.
 Copy lives in one fixed layer above the stage. Each block declares a window
 against the **whole track**, not against a leg.
 
-- `data-sc-window="hero"` — present from the first pixel, fades out by 0.62 of
+- `data-sc-window="hero"`: present from the first pixel, fades out by 0.62 of
   the first leg. A hero that fades IN has to fade in over an empty first screen,
   which is the one moment on the page with nothing else to look at.
-- `data-sc-window="finale"` — fades in from 0.4 of the last leg and holds to the
+- `data-sc-window="finale"`: fades in from 0.4 of the last leg and holds to the
   end.
-- `data-sc-window="0.38 0.66"` — a plateau window across those track fractions:
+- `data-sc-window="0.38 0.66"`: a plateau window across those track fractions:
   ramps in over the first 30%, holds at full opacity, ramps out over the last
   30%. Add a third and fourth number to set the ramps yourself. The plateau is
   not decoration: a pure triangle touches opacity 1 for one instant, so the
@@ -322,9 +322,9 @@ It reports:
   crossfade progress, and no copy-window opacity change between two samples more
   than 0.12vh apart. Skipped under reduced motion, where each leg legitimately
   holds one still frame.
-- **legs that never reach full opacity** — a weight or a seam that is wrong: the
+- **legs that never reach full opacity**: a weight or a seam that is wrong: the
   reader is shown a permanent dissolve and never the leg itself.
-- **legs stuck on poster** — a clip that never loaded or never decoded. It passes
+- **legs stuck on poster**: a clip that never loaded or never decoded. It passes
   every other check, because a poster looks exactly like a paused film.
 - **contrast** on visible copy blocks, through the same direction-aware
   compositing path as cues.
