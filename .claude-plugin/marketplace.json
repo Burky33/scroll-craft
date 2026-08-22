@@ -10,7 +10,7 @@
       "name": "scrollcraft",
       "source": "./plugins/scrollcraft",
       "description": "Build a premium, scroll-driven interactive landing page: scroll becomes the timeline, video scrubs under the wheel, and the page verifies itself by screenshotting its own scroll.",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": {
         "name": "Nate Herk"
       }

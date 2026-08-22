@@ -395,3 +395,92 @@ Also recorded: changing any weight moves every leg boundary, so every
 `data-sc-window` must be recomputed and then re-checked against the frame it was
 tuned to. `orrery`'s labels were re-verified on screen at Kyoto and Erg Chebbi
 after the repace.
+
+---
+
+## Clip time is not cue time (the frozen-clip class)
+
+Reported from a real read of `agency` / Fallowbank: "scenes are moving with a
+scroll, but then they stop and then the whole site starts to move, so now we're
+seeing an image that's still."
+
+A pinned stage is on screen for one viewport **before** its pinned travel starts
+and one viewport **after** it ends. Act progress `p` is 0 across the whole entry
+slide and 1 across the whole exit slide, so a clip driven by `p` is parked on its
+first frame while the stage slides in and on its last frame while it slides out.
+The reader scrubs a film, the film stops, and the page then slides a still
+photograph past them.
+
+**What changed**
+
+- **The engine now maps clip time across the stage's entire visible life by
+  default**, with both ends clamped to scroll that actually exists so a hero at
+  document top still starts on frame one and an act near the bottom still reaches
+  its last frame. Cues still use `p`, because cues belong to the pin.
+  `data-sc-clip-map="travel"` is the opt-out. The old `data-sc-runout` opt-in is
+  accepted and ignored: it addressed only the exit half, and it was opt-in, which
+  is why three of four builds carrying a scrub act shipped frozen anyway.
+- **`shoot.mjs` samples each scrub act's entry and exit slides.** It previously
+  sampled pinned acts only at `top + (h - vh) * p`, which never visits either
+  slide. That sampling gap is the whole reason this survived four builds of
+  verification: the defect lived precisely where the harness never looked.
+- **New FROZEN CLIP finding**, graded against stage visibility rather than act
+  progress. First/last-frame holds always report; mid-clip holds only report once
+  they outlast a plausible `dwell` settle. Skipped under reduced motion.
+
+**Validated, not assumed.** The detector was proven to discriminate before being
+trusted: it fires on a clip deliberately opted out with `data-sc-clip-map="travel"`
+and stays silent on the clip beside it in the same page.
+
+**Do not pair this with a shorter dwell.** Dwell moves fast at the edges and
+settles in the middle, which is exactly the shape the new mapping wants: fast
+motion on the two slides, the settle inside the pin where the copy lands.
+
+**Also found, unrelated and pre-existing:** `nateherk`'s hero paragraph fails
+contrast from `y=0` (1.01:1, dark ink over dark foliage in the sky clip). The new
+slide sampling surfaced it; the old engine fails it identically, so it is not a
+regression from this change.
+
+## 2026-08-22, portability pass (v0.2.0)
+
+The skill assumed one person's repo layout. Five references pointed at
+`OtherWorlds/Ultimate Websites/`, so the fingerprint gate and the worked
+worldflight rig dead-ended on every other machine. Packaging it as a plugin made
+that a real defect rather than a note.
+
+The fix is **not** a second templatised copy of the skill. Two copies drift, and
+this one proved it inside a day: five files diverged between the working skill
+and its published copy within an hour of the first push. There is one skill, and
+it resolves its paths instead of assuming them.
+
+- **`scripts/workspace.mjs`.** Resolves the workspace that holds builds and the
+  registry: `SCROLLCRAFT_HOME`, then the nearest `.scrollcraft.json` walking up,
+  then `<project root>/scrollcraft`. `--ensure` creates it and seeds an empty
+  registry. Builds are `<workspace>/builds/<name>/`, the registry is
+  `<workspace>/FINGERPRINTS.md`, and neither is hardcoded anywhere any more.
+- **The registry is per-user and starts empty.** The gate exists to stop you
+  repeating *yourself*, so a new user's first build has nothing to clear and
+  every build after it does. Gating a newcomer against somebody else's twelve
+  rows would block them out of grammars they have never used, which is the
+  opposite of the point. `templates/FINGERPRINTS.md` is the seed; the author's
+  twelve-row table ships separately as `EXAMPLES.md`, explicitly as
+  illustration rather than constraint.
+- **`scripts/doctor.mjs`.** Preflight, run before the interview. Checks node, a
+  full ffmpeg build, playwright, Chrome, the API key and the resolved workspace,
+  and separates required failures from optional ones. It exists because the
+  three most common setup faults all surface later as misleading errors: a
+  stripped ffmpeg reports a missing filter as a syntax error, a missing webp
+  muxer reports as a bad filename, and playwright resolves from the wrong
+  directory. On the author's machine it correctly picks the 585-filter build
+  over the stripped one first on PATH.
+- **`scripts/worldflight-assert.mjs` now ships with the skill.** It was
+  URL-driven and generic all along, sitting in a lab folder nobody else had.
+  Run it against any worldflight page before the contact sheet.
+- **The API key is documented as optional in the right place.** Generation costs
+  real money; a build from the user's own photos and footage needs no key and no
+  spend, and that is now stated as a first-class route in Bootstrap rather than
+  implied.
+
+Nothing moved on the author's machine: a two-line `.scrollcraft.json` at the
+project root points the workspace at the existing `OtherWorlds/Ultimate
+Websites`, so twelve builds and the live registry resolve exactly as before.

@@ -269,3 +269,37 @@ this one inherits.
 
 Rows are append-only. A build that has been superseded stays in the table,
 because the space it occupies is still occupied.
+
+---
+
+## `lane` — PERKFORM, second variation
+
+| Build | Grammar | Nav treatment | Hero device | Act-sequence shape | Close pattern | Signature move | World | Port |
+|---|---|---|---|---|---|---|---|---|
+| `lane` | **Rhythmic cutlist with a held overture.** Nine full-height hard-cut sections behind one act that pins. Shares the grammar cell with `airfield` and differs from it on the other five dimensions | **Two vertical Pulse Rails, one per margin, that merge into one.** Left COFFEE, right PROTEIN, each stamping named ticks as the acts that own them pass; a centred wordmark crowns them. No bar, no readout, no CTA in chrome. The rails are the only navigation and the ticks are its links | **A title alone, then a film.** Opens on a bare Roast Black ground with the `h1` centred at poster scale and nothing else on screen. As the reader scrolls, the title travels to the left column and settles while a ten-second locked-off clip fades up behind it and runs on a held stage across 3.5vh. No corner anchor, no kinetic split, no greet-over-footage: the type gets the first screen to itself | `pin(4.2) > flow x8` + one bespoke close, **10 sections / 9 engine acts, 12.91vh** (13.7vh at 390px). **Exactly one pinned act, and it is the first**: everything after act one is unpinned, under 1.4vh, with no `dwell`, no `pan` and no `scrub` device anywhere. Four clips scrubbed by page-local code, three of them simultaneously in one act, and two measured across their section's full height so a held stage keeps advancing as it leaves. Authored silence at 0.66vh directly before the peak | **The lane terminates in the ask.** The merged lane runs down into a bordered, blurred plate and stops in it: kicker, ask, one field, one button. Behind it a macro lid clip scrubs across the reachable range of the final section and arrives on its condensation frame. No gesture, no spotlight, no magnet, no fade-out | **The two-drink collapse.** Two chrome rails accumulate separately for two thirds of the page, then scroll drives them together: the ticks interleave into one column and the pair lands as the white Center Lane of the can. One rail carries the rest of the page. Distinct from `vesper-v2` (one horizontal time axis), `descent` (one depth gauge), `maison` (tokens that travel and stack), `pigment` (pointer deposits), `orrery` (markers that freeze), `airfield` (flipping characters), `phase` (pointer bloom) | Photoreal beverage campaign. **Six grounds, five hues**: Roast Black `#15110F`, Oat Cream `#F5EBDD`, Roast Brown `#3B241B`, Voltage Lime `#C8FF3D`, plus the three flavour colours as full-bleed plates. Archivo Black and Inter | 4512 |
+
+Claimed by `lane`, so also now taken:
+
+- **Nav:** margin chrome that is a *pair* and terminates by becoming one thing.
+  Also the first nav whose items are the page's own argument rather than its
+  sections.
+- **Hero:** a staged overture. Title alone on a bare ground, then the title
+  travels aside as the film fades up under it and runs on a held stage. The
+  first screen of this page has no media on it at all.
+- **Act shape:** exactly one pinned act, and it is act one. Worth knowing why
+  the pin came back: an unpinned frame gives a clip 2vh of `--sc-p` at most, and
+  a reader outruns ten seconds of footage inside that in one flick. If a page
+  wants a film that plays out, the stage has to hold; the cutlist's 1.4vh cap
+  and a ten-second shot cannot both be satisfied. The cap still governs acts two
+  through ten.
+- **Close:** an ask plate on a scrubbed macro, deliberately gestureless. Recorded
+  because the build tried the alternative first and it failed a real reader: a
+  pull-tab the visitor had to work out is the wrong ending for a landing page.
+- **Signature move:** two chrome elements merging into one. Nobody else may take
+  convergence-of-persistent-chrome as their bespoke move.
+- **Palette:** six grounds and five hues, which is the furthest any row has gone
+  from the one-canvas-plus-one-accent reflex.
+
+What it shares, and what the next build has to avoid because of it: the
+**rhythmic cutlist** grammar (with `airfield`) and **Archivo** as a display face
+(with `maison`).

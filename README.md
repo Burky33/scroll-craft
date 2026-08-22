@@ -14,9 +14,8 @@ scroll position, waits for the playhead to settle, and reports dead scroll, cues
 that never reach full opacity, and text contrast measured on the composited page
 at the brightest frame under each line.
 
-> **Status: private and pre-release (v0.1.0).** It works, and it has produced
-> twelve finished sites. It is not yet portable to someone else's machine. See
-> [Known gaps](#known-gaps) before handing it to anyone.
+> **Status: private, v0.2.0.** It works, it has produced twelve finished sites,
+> and as of this version it is portable: nothing assumes the author's machine.
 
 ---
 
@@ -37,40 +36,50 @@ To work on the skill itself without installing:
 claude --plugin-dir ./plugins/scrollcraft
 ```
 
+## First run
+
+```bash
+node scripts/doctor.mjs            # preflight: tells you exactly what is missing
+node scripts/workspace.mjs --ensure  # creates your workspace and an empty registry
+```
+
+`doctor` is worth running before anything else. The three most common setup
+faults all surface later as misleading errors otherwise: a stripped ffmpeg
+reports a missing filter as a syntax error in your command, a missing webp muxer
+reports as a bad filename, and `playwright-core` resolves from the wrong
+directory.
+
+## The workspace
+
+Your builds and your fingerprint registry live in one directory, resolved rather
+than assumed. First hit wins:
+
+1. `SCROLLCRAFT_HOME`
+2. the nearest `.scrollcraft.json` walking up from the current directory:
+   ```json
+   { "workspace": "path/to/wherever/you/keep/builds" }
+   ```
+3. `<project root>/scrollcraft`, where the project root is the nearest ancestor
+   holding a `.git`
+
+So a build lands in `<workspace>/builds/<name>/` and your registry is
+`<workspace>/FINGERPRINTS.md`. If you already keep builds somewhere, point a
+`.scrollcraft.json` at it and nothing moves.
+
+**Your registry starts empty, and that is correct.** The fingerprint gate exists
+to stop you repeating *yourself*. Your first build has nothing to clear; every
+build after it does. `EXAMPLES.md` in this repo is the author's twelve-row
+table, included so you can see what a filled registry looks like and which
+shapes tend to collide. It is illustration, not constraint.
+
 ## Requirements
 
 | Requirement | Why | Notes |
 | --- | --- | --- |
 | Node 18+ | every script | |
-| **A full ffmpeg build** | encoding clips for scrubbing, extracting posters and seam frames | A stripped ffmpeg (some toolchains ship one with ~50 filters) fails in ways that read as syntax errors. Set `SCROLLCRAFT_FFMPEG` to override. |
-| `playwright-core` + Chrome | the verification harness | `npm i playwright-core` in the build folder |
-| `KIE_AI_API_KEY` | **only** if generating imagery | See `.env.example`. Bring-your-own-assets builds need no key and no spend. |
-
-## What is in here
-
-```
-plugins/scrollcraft/
-├── SKILL.md            the procedure: interview, grammar, score, build, verify
-├── references/
-│   ├── uniqueness.md   eight page grammars, the signature move, the fingerprint gate
-│   ├── feel.md         the feeling curve, the engineered peak, the feel check
-│   ├── devices.md      the nine scroll devices and the cue contract
-│   ├── worldflight.md  continuous-world mode: one fixed stage, no seams
-│   ├── worlds.md       art direction, and the style-preamble method
-│   ├── taste.md        the taste floor: spacing, type, colour, depth, motion
-│   ├── assets.md       generation, camera moves, encoding for scrubbing
-│   ├── verify.md       the harness, and what it cannot tell you
-│   └── template.html   a starting skeleton, not a layout
-├── engine/             scrollcraft.js + .css. The mechanism. Never edited per project.
-└── scripts/            kie.mjs, encode.sh, serve.mjs, shoot.mjs
-```
-
-`CHANGELOG.md` inside the plugin is worth reading on its own. It records what
-broke on each build and the rule that came out of it, rather than a feature list.
-
-`EXAMPLES.md` at the repo root is the fingerprint registry for the twelve builds
-made so far: the grammar, nav, hero, act shape, close and signature move of
-each. It is a record of shapes that are taken.
+| **A full ffmpeg build** | encoding clips for scrubbing, extracting posters and seam frames | A stripped ffmpeg (some toolchains ship one with ~50 filters) fails in ways that read as syntax errors. `doctor` finds a real build if one exists; `SCROLLCRAFT_FFMPEG` overrides. |
+| `playwright-core` + Chrome | the verification harness | `npm i playwright-core` **in the build folder** |
+| `KIE_AI_API_KEY` | **only** if generating imagery | See `.env.example`. A build from your own photos and footage needs no key and no spend, and it is a first-class route. |
 
 ## The one rule that matters most
 
@@ -82,22 +91,16 @@ built on one looks the same.
 
 ## Known gaps
 
-Honest list of what stops this being handed to a student today.
+Fixed in v0.2.0: hardcoded author paths, the shared fingerprint registry, the
+missing preflight, and the unshipped worldflight rig.
 
-1. **Paths assume the author's repo.** Nine references across `SKILL.md`,
-   `uniqueness.md`, `feel.md` and `worldflight.md` point at
-   `OtherWorlds/Ultimate Websites/`. The fingerprint gate and the worked
-   worldflight rig both dead-end elsewhere.
-2. **The fingerprint registry is personal.** `EXAMPLES.md` lists builds by one
-   author. A new user should be gated against *their own* builds, starting from
-   an empty registry, or they are blocked from grammars they have never used.
-3. **No preflight.** There is no `doctor` script. Missing ffmpeg filters, an
-   unset API key and a missing Chrome all currently fail deep inside a run with
-   messages that point at the wrong cause.
-4. **Cost is not surfaced early enough.** Generation spends real money. The
-   bring-your-own-assets path works and should be documented as a first-class
-   route rather than a footnote.
-5. **No licence yet.** See below.
+Still open:
+
+1. **No licence yet.** See below.
+2. **Windows-first path guesses.** `doctor` and `encode.sh` look for ffmpeg in
+   WinGet, Homebrew and `/usr/local` locations. Other setups need
+   `SCROLLCRAFT_FFMPEG`.
+3. **Not tested on macOS or Linux.** Every build so far ran on Windows.
 
 ## Licence
 

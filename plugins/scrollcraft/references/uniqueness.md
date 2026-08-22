@@ -399,7 +399,15 @@ the filmic default in §2, one level down.
 
 ## 4. The fingerprint gate
 
-The registry lives at `OtherWorlds/Ultimate Websites/FINGERPRINTS.md`.
+The registry lives at `<workspace>/FINGERPRINTS.md`, where `<workspace>` is
+whatever `node <skill>/scripts/workspace.mjs` prints. It is per-user and it
+starts empty: the gate is about not repeating **yourself**, so your first build
+has nothing to clear and every build after it does.
+
+A worked twelve-row registry ships as `EXAMPLES.md` in the scrollcraft
+repository. Read it to see what a filled table looks like and which shapes tend
+to collide. It is illustration, not constraint: those are somebody else's
+builds and they do not gate yours.
 
 **Before building:** read it. Every row is a shape that is now taken.
 

@@ -335,7 +335,15 @@ node scripts/shoot.mjs --url http://localhost:45XX --out lab/<name>-shots --per-
 node scripts/shoot.mjs --url http://localhost:45XX --out lab/<name>-reduced --reduced-motion
 ```
 
-A worked rig lives at `OtherWorlds/Ultimate Websites/lab/worldflight-rig/`, with
-its mechanical assertions in `lab/worldflight-assert.mjs`: spacer height, fixed
-stage, nothing in flow, lerp convergence and non-overshoot, seam monotonicity,
-the copy transform cap, and the reduced-motion contract.
+The mechanical assertions ship with the skill as
+`scripts/worldflight-assert.mjs` and run against **any** worldflight page, not a
+special rig: spacer height, fixed stage, nothing in document flow, lerp
+convergence and non-overshoot, seam monotonicity, the copy transform cap, and
+the reduced-motion contract.
+
+```bash
+node <skill>/scripts/worldflight-assert.mjs --url http://localhost:45XX
+```
+
+Run it against your own build before the contact sheet. It answers "does the
+mode actually hold" in a way a screenshot cannot.

@@ -15,12 +15,19 @@
      <section data-sc-act="pin" data-sc-span="2.5"> ... </section>
 
      data-sc-act   scrub | pin | pan | flow   (default: flow)
-     data-sc-runout on a pinned act. Measures its scrub clip against the act's
-                   full height instead of its pinned travel, so the last frame
-                   lands as the stage clears the top of the viewport rather than
-                   one viewport-height earlier. Without it the clip finishes
-                   while the stage is still fully on screen and the reader
-                   scrolls a whole screen of frozen frame to get past it.
+     data-sc-clip-map="travel" opts a pinned act OUT of full-life clip mapping.
+                   By DEFAULT a scrub clip is mapped across the stage's entire
+                   on-screen life, not across its pinned travel, because a pinned
+                   stage is visible for a viewport BEFORE the pin begins (sliding
+                   up into view) and a viewport AFTER it ends (sliding off the
+                   top). Mapped to pinned travel, the clip sits on its first
+                   frame through the whole entry and its last frame through the
+                   whole exit: the reader watches a still photograph while the
+                   page moves. Pair it with data-sc-dwell, which moves quickly at
+                   the edges and settles in the middle, so the fast motion lands
+                   on the two slides and the settle lands inside the pin where
+                   the copy is. data-sc-runout is accepted and ignored; it named
+                   the old opt-in for the exit half of this.
      data-sc-span  viewport-heights of scroll this act owns. Pinned devices only
                    (scrub/pin/pan). Default 1.5. The engine sets the outer
                    height and sticks the first .sc-stage / [data-sc-stage] child.
@@ -316,7 +323,7 @@
         pinned: pinned,
         span: parseFloat(el.getAttribute('data-sc-span')) || (pinned ? 1.5 : 0),
         dwell: parseFloat(el.getAttribute('data-sc-dwell')) || 0,
-        runout: pinned && el.hasAttribute('data-sc-runout'),
+        clipTravel: pinned && el.getAttribute('data-sc-clip-map') === 'travel',
         p: 0, raw: 0, top: 0, height: 0, live: false,
         cues: [], parallax: [], reveals: [], counts: [],
         video: null, seq: null, rail: null
@@ -748,6 +755,7 @@
     function read() {
       y = scrollY || pageYOffset;
       var driftA = null, driftB = null, driftT = 0;
+      var maxY = Math.max((document.documentElement.scrollHeight || 0) - vh, 1);
 
       for (var i = 0; i < acts.length; i++) {
         var a = acts[i];
@@ -761,16 +769,23 @@
         a.raw = raw;
         a.p = a.dwell ? dwell(raw, a.dwell) : raw;
 
-        // Clip progress can outrun cue progress. A pinned stage is still fully
-        // on screen when raw hits 1, and stays on screen for one more viewport
-        // of scroll while it slides off the top; a clip driven by `p` spends all
-        // of that as a still frame. `runout` measures the clip against the act's
-        // whole height instead, which puts the last frame exactly where the
-        // stage leaves the viewport. Cues keep using `p`, so copy still lands
-        // and clears inside the pin.
+        // Clip time is NOT cue time. Cues belong to the pin, so they keep using
+        // `p`. The clip belongs to the stage, and the stage is on screen for one
+        // viewport before the pin starts and one after it ends. Driving the clip
+        // from `p` therefore parks it on frame one for the whole entry slide and
+        // on its last frame for the whole exit slide, which is a still
+        // photograph moving up the screen under the reader's hand.
+        //
+        // So map the clip across the stage's entire visible life instead. Both
+        // ends are clamped to scroll that actually exists: an act at the top of
+        // the document has no entry slide and must still start on frame one, and
+        // an act near the bottom must still reach its last frame while the page
+        // can still scroll.
         a.vp = a.p;
-        if (a.runout) {
-          var vraw = clamp01((y - a.top) / Math.max(a.height, 1));
+        if (a.pinned && !a.clipTravel) {
+          var startY = a.top - Math.min(vh, a.top);
+          var endY = Math.min(a.top + a.height, maxY);
+          var vraw = clamp01((y - startY) / Math.max(endY - startY, 1));
           a.vp = a.dwell ? dwell(vraw, a.dwell) : vraw;
         }
         a.live = (y > a.top - vh * 1.25) && (y < a.top + a.height + vh * 1.25);

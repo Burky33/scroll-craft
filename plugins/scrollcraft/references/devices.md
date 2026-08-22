@@ -52,6 +52,38 @@ so spend it on the open.
 **At most two scrub acts per page.** The third one is no longer a surprise, and
 it is the heaviest thing on the page.
 
+### Clip time is not cue time
+
+The single most damaging bug this device has, and it is invisible in every
+screenshot taken one at a time.
+
+A pinned stage is on screen for **one viewport before** its pinned travel begins,
+sliding up into view, and **one viewport after** it ends, sliding off the top.
+The act's progress `p` is 0 through the whole entry and 1 through the whole exit.
+So a clip driven by `p` sits frozen on its first frame while it slides in, and
+frozen on its last frame while it slides out. The reader has been scrubbing a
+film with their hand, the film stops, and then the whole page slides a still
+photograph past them. It reads as the site breaking, and it is the fastest way to
+make an expensive page feel cheap.
+
+The engine therefore maps the clip across the stage's **entire visible life**, not
+across its pinned travel, and this is the **default**. Both ends are clamped to
+scroll that actually exists, so a hero at the top of the document still starts on
+frame one and an act near the bottom still reaches its last frame. Cues keep
+using `p`, because cues belong to the pin.
+
+**Pair it with `data-sc-dwell`.** Dwell moves quickly at the edges and settles in
+the middle, which is exactly the shape this mapping wants: the fast motion lands
+on the two slides, and the settle lands inside the pin where the copy is. The two
+were built for each other.
+
+`data-sc-clip-map="travel"` restores the old pinned-travel mapping. There is
+almost no reason to reach for it, and reaching for it reintroduces the freeze.
+
+The harness checks this now (see [verify.md](verify.md)), so a frozen clip fails
+verification instead of shipping. Do not rely on noticing it by eye: every
+individual frame of a frozen clip looks completely correct.
+
 ### The playhead is lerped
 
 Scroll never writes `currentTime`. It writes a target, and a standalone rAF loop

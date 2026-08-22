@@ -149,7 +149,7 @@ decoration. Merge them, or cut the one that is not the peak.
 
 The test is also the fastest fingerprint check available. If the sentence would
 be true of an existing build in
-`OtherWorlds/Ultimate Websites/FINGERPRINTS.md`, the page is not new yet.
+`<workspace>/FINGERPRINTS.md`, the page is not new yet.
 
 ---
 

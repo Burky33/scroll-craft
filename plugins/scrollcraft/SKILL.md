@@ -103,7 +103,7 @@ Keep it short. Eight questions, asked in one pass:
    generation cost; the answer decides what gets graded and encoded versus
    generated. "Nothing" is a fine answer and means a fully generated world.
 
-Write the answers into `builds/<name>/BRIEF.md` before any act planning, in
+Write the answers into `<workspace>/builds/<name>/BRIEF.md` before any act planning, in
 their words, not paraphrased into marketing prose. Everything downstream reads
 from that file.
 
@@ -128,14 +128,51 @@ self-authored brief is a fallback, never the plan.
 ## Bootstrap
 
 Environment, not a stage of the work. Do it once the interview is answered and
-before Step 1. Check, and say plainly which are missing rather than working
-around them silently:
+before Step 1.
 
-1. `node --version` (18+) and `ffmpeg -version`.
-2. `KIE_AI_API_KEY` in the project-root `.env`. Confirm balance:
-   `node <skill>/scripts/kie.mjs probe`. A still costs cents, a 5s clip costs
+**Run the preflight rather than checking by hand.** It knows the failure modes
+that otherwise surface later as misleading errors, chiefly a stripped ffmpeg
+that reports a missing filter as a syntax error in your command:
+
+```bash
+node <skill>/scripts/doctor.mjs
+```
+
+It reports node, a full ffmpeg build, playwright and Chrome, the API key, and
+the resolved workspace. Required failures exit non-zero. Say plainly which items
+are missing rather than working around them silently.
+
+### The workspace
+
+Builds and the fingerprint registry live in one directory, and **it is resolved,
+never assumed**:
+
+```bash
+node <skill>/scripts/workspace.mjs --ensure     # prints it, creates it, seeds the registry
+```
+
+Resolution order, first hit wins:
+
+1. `SCROLLCRAFT_HOME`
+2. the nearest `.scrollcraft.json` walking up from the cwd, `{ "workspace": "..." }`
+3. `<project root>/scrollcraft`, where the project root is the nearest ancestor
+   holding a `.git`
+
+So a build folder is `<workspace>/builds/<name>/` and the registry is
+`<workspace>/FINGERPRINTS.md`. The registry starts **empty**: the gate exists to
+stop you repeating yourself, so your first build has nothing to clear.
+
+If you already keep builds somewhere else, drop a `.scrollcraft.json` at your
+project root pointing at it and nothing moves.
+
+### The rest
+
+1. `KIE_AI_API_KEY`, **only if you are generating assets.** A build from the
+   user's own photos and footage needs no key and no spend, and that is a
+   first-class route, not a fallback. Confirm balance with
+   `node <skill>/scripts/kie.mjs probe`. A still costs cents and a 5s clip costs
    more; a six-act page with two clips is a small spend, not a large one.
-3. A brand kit if one exists (colours, logo, type, existing product shots). If
+2. A brand kit if one exists (colours, logo, type, existing product shots). If
    the brand has a folder in this repo, read it before generating anything, and
    obey its hard rules. A brand that forbids invented numbers means no stat
    counters, however good they look.
@@ -195,8 +232,9 @@ grammar; they are not decided separately.
 alone, coded in the page, not a parameter change to a kit device. Question 5 of
 the interview is the seed. The engine stays untouched.
 
-**Run the fingerprint gate.** Read
-`OtherWorlds/Ultimate Websites/FINGERPRINTS.md`. The planned build must differ
+**Run the fingerprint gate.** Read your registry at
+`<workspace>/FINGERPRINTS.md` (see **The workspace** in Bootstrap; run
+`node <skill>/scripts/workspace.mjs` to print the path). The planned build must differ
 from **every** existing row on at least 4 of 6 dimensions: grammar, nav
 treatment, hero device, act-sequence shape, close pattern, signature move. Four
 against each row individually. If it fails, change the plan, not the log.
@@ -360,7 +398,7 @@ generated, what you verified with screenshots, and anything you could not
 verify. Say if the brief was self-authored rather than interviewed. Give the
 local URL. Keep it brief; the page is the deliverable.
 
-Then append the build's row to `OtherWorlds/Ultimate Websites/FINGERPRINTS.md`.
+Then append the build's row to `<workspace>/FINGERPRINTS.md`.
 
 Changes to the skill itself, and the build findings that drove them, are logged
 in [CHANGELOG.md](CHANGELOG.md).

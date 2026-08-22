@@ -186,6 +186,22 @@ const positions = WORLD ? await page.evaluate((perSeg) => {
       const p = 0.02 + f * 0.96;
       out.push(Math.round(pinned ? top + (h - innerHeight) * p : top - innerHeight + (h + innerHeight) * p));
     });
+    // A pinned stage is on screen for a viewport BEFORE its pinned travel begins
+    // and a viewport AFTER it ends, and the loop above samples only inside the
+    // travel. Those two slides are exactly where a clip mapped to pinned
+    // progress sits frozen on its first or last frame, so not sampling them is
+    // why a frozen clip could pass this harness. Sample them.
+    if (el.dataset.scAct === "scrub") {
+      // `v` is the fraction of the viewport the stage covers at that position.
+      // Sample the part of each slide where the stage is still MOSTLY on screen,
+      // because that is where a frozen frame is conspicuous, and because the
+      // frozen-clip check needs consecutive samples that are both well past its
+      // visibility gate before it will call anything.
+      [0.6, 0.75, 0.9].forEach((v) => {
+        out.push(Math.round(top - innerHeight * (1 - v)));  // sliding in
+        out.push(Math.round(top + h - innerHeight * v));    // sliding out
+      });
+    }
   });
   const max = document.body.scrollHeight - innerHeight;
   out.push(max);
@@ -237,6 +253,14 @@ for (let i = 0; i < positions.length; i++) {
       painted: (v.closest("[data-sc-act]") ?? v).classList.contains("sc-has-clip"),
       t: +(v.currentTime || 0).toFixed(2),
       dur: +(v.duration || 0).toFixed(2),
+      // How much of the viewport this clip's stage actually covers. A frozen
+      // playhead only matters while the reader can see the stage.
+      vis: (() => {
+        const st = v.closest("[data-sc-stage]") || v.parentElement;
+        if (!st) return 0;
+        const b = st.getBoundingClientRect();
+        return +(Math.max(0, Math.min(b.bottom, innerHeight) - Math.max(b.top, 0)) / innerHeight).toFixed(3);
+      })(),
     }));
     // Rails and wipes move without changing any cue or clip time, so without
     // these a panning section reads as dead scroll.
@@ -482,6 +506,51 @@ if (WORLD) {
 console.log(dead.length ? `\nDEAD SCROLL between: ${dead.join(", ")}`
   : WORLD && REDUCED ? "\ndead-scroll check skipped: reduced motion holds each leg on one still frame by design"
   : "\nno dead scroll detected");
+
+// FROZEN CLIP. The reader is scrolling, a scrub stage is on screen, and its
+// playhead is not moving: a still photograph sliding up the page. Dead scroll
+// cannot see this, because the stage IS moving, which is the whole problem.
+//
+// A hold on the first or last frame is always a defect. A hold in the middle
+// can be an intentional `dwell` settle, so it only counts once it outlasts one.
+// Skipped under reduced motion, where no clip is ever fetched on purpose.
+if (!REDUCED) {
+  const nClips = report[0]?.clips?.length || 0;
+  const VIS = 0.55, EPS = 0.012, MIN = doc.vh * 0.15;
+  const frozen = [];
+  for (let c = 0; c < nClips; c++) {
+    let run = null;
+    const flush = () => {
+      if (!run) return;
+      const kind = run.t < 0.05 ? "entry" : (run.dur && run.t > run.dur - 0.08 ? "exit" : "mid");
+      const need = kind === "mid" ? doc.vh * 0.5 : MIN;
+      if (run.to - run.from >= need) frozen.push({ c, kind, ...run });
+      run = null;
+    };
+    for (let i = 1; i < report.length; i++) {
+      const a = report[i - 1].clips?.[c], b = report[i].clips?.[c];
+      if (!a || !b) { flush(); continue; }
+      const seen = a.vis >= VIS && b.vis >= VIS;
+      const stuck = Math.abs(b.t - a.t) < EPS;
+      if (seen && stuck && b.painted) {
+        if (!run) run = { from: report[i - 1].y, to: report[i].y, t: b.t, dur: b.dur };
+        else run.to = report[i].y;
+      } else flush();
+    }
+    flush();
+  }
+  if (frozen.length) {
+    console.log("\nFROZEN CLIP (still image while the page moves):\n  " + frozen.map((f) => {
+      const px = f.to - f.from;
+      const where = f.kind === "entry" ? "held on its FIRST frame while the stage slides in"
+        : f.kind === "exit" ? "held on its LAST frame while the stage slides out"
+        : `held mid-clip at ${f.t.toFixed(2)}s, longer than a dwell settle`;
+      return `clip ${f.c}: ${px}px (${(px / doc.vh).toFixed(2)} viewports) ${where}`;
+    }).join("\n  ") + "\n  Fix: let the clip map across the stage's whole visible life. That is the\n  engine default; data-sc-clip-map=\"travel\" turns it off. See devices.md.");
+  } else if (nClips) {
+    console.log(`all ${nClips} scrub clip(s) keep moving whenever they are on screen`);
+  }
+}
 
 // Worldflight findings. A leg that never reaches full opacity is a weight or a
 // seam that is wrong: the reader is shown a permanent dissolve between two

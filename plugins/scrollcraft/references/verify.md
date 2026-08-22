@@ -54,6 +54,26 @@ resolved hold, set `data-sc-verify-hold="true"` only while the hold is active.
 Reduced-motion fixed stages may use the same attribute for deliberately stable
 frames, which still require manual contact-sheet review.
 
+**FROZEN CLIP** — a scrub stage is on screen, the reader is scrolling, and the
+clip's playhead is not moving. Dead scroll cannot see this, because the stage
+itself *is* moving: a still photograph is sliding up the page, which is the
+worst-looking failure this kit can produce and the one that most reliably makes
+a page feel broken.
+
+The harness samples each scrub act's **entry and exit slides**, not only its
+pinned travel. That gap is why this went undetected for four builds: a pinned
+act's samples were taken at `top + (h - vh) * p`, which never visits the viewport
+of scroll on either side where the stage is visible and the clip is parked. A
+hold on the first or last frame is always reported. A hold in the middle is only
+reported once it outlasts any plausible `data-sc-dwell` settle, since that settle
+is a deliberate effect. The check is skipped under reduced motion, where no clip
+is ever fetched on purpose.
+
+The fix is almost never per-page: the engine maps clip time across the stage's
+whole visible life by default. A page that reports this has usually opted out
+with `data-sc-clip-map="travel"`, or is running an engine copy from before that
+default existed. See [devices.md §1](devices.md).
+
 **CUES THAT NEVER PEAK** — an element that never reaches full opacity anywhere.
 Usually a cue window too narrow for its act, or ramps that eat the whole window.
 Widen the window or set explicit ramps. A kinetic heading is read through its
@@ -271,6 +291,7 @@ until it was measured.
 | An inverted section rendering its old ink, graded in the wrong direction | `--sc-ink` redefined on the subtree without restating `color`. See taste.md |
 | A ground colour arriving a section late | `drift` on a page of short acts; several are part-way through at once. Paint grounds per section. See devices.md §10 |
 | Every cue and reveal in a quiet act snapping 0 to 1 | A pinned act at `data-sc-span` ≤ 1, which is one pixel of travel. Minimum useful pinned span is ~1.2 |
+| A clip that scrubs beautifully, stops, and then slides up the page as a still photograph | The clip was mapped to the act's pinned travel, which is 0 through the entire entry slide and 1 through the entire exit slide. The engine now maps clip time across the stage's whole visible life by default. See devices.md §1 |
 | A custom fixed stage passing while its first screens do nothing | The page used `flow` markers, which are intentionally excluded from ordinary dead-scroll checks, but published no `data-sc-verify-state`. Report the actual rendered state and declare only genuine resolved holds |
 
 The first three are invisible to every check except looking at rendered output.
