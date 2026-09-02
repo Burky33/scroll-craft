@@ -13,20 +13,20 @@ Most AI website output fails in one of two directions. It is either well behaved
 
 Same skill, same engine, no shared skeleton. The differences below are not themes: they are different page grammars, different navigation models, different endings.
 
-### Orrery · a travel practice
-One unbroken world. The whole page is a single fixed stage: you fall into a handmade scale model of the Earth, land in Kyoto, cross to Patagonia and the Sahara, and rise back to the workbench you started on. No section boundaries anywhere.
+### [AI Automation Society](https://aiautomationsociety.ai) · an AI community
+A dark editorial landing for a 450,000-member community. One stat carries the whole promise, a live product surface rises into the frame, and the proof stacks under it as you fall down the page.
 
-![Orrery, a continuous-world scroll flight](media/orrery.webp)
+![AI Automation Society, a dark editorial community landing](media/ais.webp)
+
+### [Nate Herk](https://www.nateherk.com) · a creator portfolio
+High-key and bright, the opposite of the first. A lit-glass hero with the numbers up front, a portrait held in the light, and two clear next steps instead of a wall of links.
+
+![Nate Herk, a high-key lit-glass creator portfolio](media/nateherk.webp)
 
 ### PERKFORM · a protein coffee
 A filmic one-shot that hard-cuts to two full-bleed inverted grounds mid-page. Loud, product-forward, and the only one of the three that raises its voice.
 
 ![PERKFORM, a filmic one-shot product page](media/perkform.webp)
-
-### Fallowbank · a landscape design-build studio
-Quiet, documentary, restrained. Museum-label copy over real photography, and a close that is a line of running text rather than a button.
-
-![Fallowbank, a restrained documentary page](media/fallowbank.webp)
 
 ---
 
