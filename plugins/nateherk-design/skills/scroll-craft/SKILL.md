@@ -1,5 +1,5 @@
 ---
-name: scrollcraft
+name: scroll-craft
 description: >
   Build a premium, scroll-driven interactive landing page for any business:
   a service company, a physical product, a food brand, a drink brand. Scroll
@@ -20,7 +20,7 @@ description: >
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep, AskUserQuestion
 ---
 
-# scrollcraft
+# scroll-craft
 
 Scroll is the only input every visitor already knows how to use. This skill
 treats it as a timeline: the wheel is a scrubber, the page is a film with real

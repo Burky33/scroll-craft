@@ -1,8 +1,23 @@
-# scrollcraft changelog
+# scroll-craft changelog
 
 Dated notes on what changed in the skill and which build's finding drove it.
 Builds live in `OtherWorlds/Ultimate Websites/builds/`; each carries a
 `BUILD-REPORT.md`.
+
+## 2026-09-01: skill renamed to `scroll-craft` to match the repo
+
+The repo, the skill and the invocation now share one spelling. The skill was
+`scrollcraft` (no dash) while the repo was `scroll-craft`, so the two never
+matched. The skill directory, its frontmatter `name`, and the invocation are
+now `scroll-craft`: invoke it as `/nateherk-design:scroll-craft`.
+
+The engine is deliberately left as `scrollcraft`. The files `scrollcraft.js`
+and `scrollcraft.css`, the `.scrollcraft.json` workspace config, the
+`SCROLLCRAFT_*` environment variables, and the default `scrollcraft` workspace
+folder keep their names. Every build already made copies the engine files by
+those names and resolves its workspace by that config, so renaming them would
+break existing builds and setups for no real gain. The skill is `scroll-craft`;
+its engine is `scrollcraft`.
 
 ## 2026-09-01: counters tick up on entry; fade-in documented properly
 

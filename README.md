@@ -1,8 +1,8 @@
-# scrollcraft
+# scroll-craft
 
 **A Claude Code skill that builds premium, scroll-driven websites, and holds them to a real design standard.**
 
-Most AI website output fails in one of two directions. It is either well behaved and forgettable, or it is a flashy scroll animation with 2.1:1 body text, a headline that wraps to six lines on a phone, and the same six sections every other AI page has. scrollcraft is built to fail neither way: it treats **interaction** and **craft** as one job rather than two.
+Most AI website output fails in one of two directions. It is either well behaved and forgettable, or it is a flashy scroll animation with 2.1:1 body text, a headline that wraps to six lines on a phone, and the same six sections every other AI page has. scroll-craft is built to fail neither way: it treats **interaction** and **craft** as one job rather than two.
 
 [![MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
 [![Claude Code plugin](https://img.shields.io/badge/Claude%20Code-plugin-d97757.svg)](https://code.claude.com/docs/en/plugins)
@@ -75,7 +75,7 @@ Then it writes a contact sheet, because a machine can prove a page works and can
 Then use it by describing what you want, or invoke it directly:
 
 ```
-/nateherk-design:scrollcraft
+/nateherk-design:scroll-craft
 ```
 
 If the install summary says `Run /reload-plugins to activate.`, run that.
@@ -120,7 +120,7 @@ Builds land in `<workspace>/builds/<name>/`; your registry is `<workspace>/FINGE
 
 ```
 plugins/nateherk-design/
-└── skills/scrollcraft/
+└── skills/scroll-craft/
     ├── SKILL.md            the procedure: interview, grammar, score, build, verify
     ├── references/
     │   ├── uniqueness.md   eight page grammars, the signature move, the fingerprint gate
@@ -137,7 +137,7 @@ plugins/nateherk-design/
     └── scripts/            doctor · workspace · kie · encode · serve · shoot · worldflight-assert
 ```
 
-[`CHANGELOG.md`](plugins/nateherk-design/skills/scrollcraft/CHANGELOG.md) is worth reading on its own: it records what broke on each build and the rule that came out of it, rather than a feature list.
+[`CHANGELOG.md`](plugins/nateherk-design/skills/scroll-craft/CHANGELOG.md) is worth reading on its own: it records what broke on each build and the rule that came out of it, rather than a feature list.
 
 ## The one rule that matters most
 
