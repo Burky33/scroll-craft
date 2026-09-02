@@ -334,6 +334,55 @@ layers is plenty; five is a diorama.
 Never put body copy on a parallax layer. Text the reader is trying to read
 should not move relative to the thing they are reading it against.
 
+
+### Layered scenes: where the premium feel actually comes from
+
+A flat page moves as one sheet. A layered page is a stack of cut-out planes
+that slide past each other, and the eye reads that differential motion as
+depth before it reads anything else. It is the single biggest difference
+between a page that feels built and one that feels assembled, and it is cheap:
+three transparent images and a scroll multiplier each.
+
+How to build a layered hero, measured from a reference premium site and
+proven on a live build:
+
+- **Plan the planes back to front.** A far ridge, a mid ridge, the product
+  (a device, a bottle, a card), then a foreground plane in front of the
+  product. The product sits between mid and front, so the foreground overtakes
+  it as the reader scrolls. That overtaking is the move.
+- **Small rate differences, not big ones.** The reference hero lags the far
+  plane 31% behind the page, the mid plane 17%, the product 20%, and the
+  foreground and the copy travel at exactly 1x. Adjacent planes differ by ten
+  to thirty percent. Anything larger stops reading as distance and starts
+  reading as things sliding around. Copy always rides at 1x.
+- **Shape the foreground for the product.** If the foreground plane is a
+  straight edge it covers the product's call to action within a few hundred
+  pixels of scroll. Cut it so it dips where the product is and rises at the
+  edges, and the reader keeps the button in view for two to three times as
+  long.
+- **Every plane is solid below its silhouette.** Cut-out art that fades to
+  transparent at the bottom lets the plane behind show through under it as the
+  planes separate. Fill each column solid from its first opaque pixel down.
+- **Fade the section floor.** Planes travel past the section's bottom edge and
+  get clipped there. A gradient to the page ground over the last 200 to 300px,
+  layered above every plane, hides the clip line at any scroll position.
+
+Three traps that have each cost a round of fixes:
+
+- A global `img { max-width: 100% }` shrinks an absolutely positioned plane to
+  the viewport on phones, so the mountains never show. Planes carry
+  `max-width: none` and a fixed pixel width.
+- A `transition: transform` on a plane (a reveal class, usually) eases every
+  per-frame scroll write over its duration. On a phone that reads as the
+  product lagging a full second behind the thumb. Parallaxed elements
+  transition opacity only.
+- Replacing a plane's art under the same filename ships nothing to a phone
+  that has the old bytes cached. New art gets a new name.
+
+The `data-sc-parallax` rate above and a raw scroll multiplier are the same
+tool in different units. What matters is the ratio between planes, not the
+absolute travel.
+
 ---
 
 ## 7. `count`: numbers that land
