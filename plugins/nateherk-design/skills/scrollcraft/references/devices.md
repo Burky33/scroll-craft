@@ -402,6 +402,34 @@ what makes it persuasive and what makes an invented one a liability. If the
 brand has no verified figure, there is no counter. Check the brand's rules
 first; several forbid this outright.
 
+**Numbers that tick up when they come into view.** The form above is scrubbed
+by act progress, so it only runs inside a pinned act. For a stat row in an
+ordinary flow section, put the same attribute on a counter that is not inside
+any `data-sc-act` and it fires once on entry instead, ticking from the first
+value to the second over `data-sc-count-ms` (default 1400):
+
+```html
+<div class="sc-stack" data-sc-in data-sc-stagger="80">
+  <p class="sc-display sc-display--lg"><span data-sc-count="0 450,000">0</span> members</p>
+  <p class="sc-display sc-display--lg"><span data-sc-count="0 953,000">0</span> subscribers</p>
+</div>
+```
+
+What makes it land rather than spin:
+
+- **Ease out, hard.** The tick runs a cubic ease-out, so most of the distance
+  goes by in the first third and the last digits settle slowly. A linear count
+  reads as a slot machine.
+- **1.2 to 1.8 seconds.** Under a second and the reader misses that it moved;
+  past two and they are waiting for a number they have already guessed.
+- **It fires at half visibility, once.** The observer waits until half the
+  element is on screen so the reader is looking at it when it starts, and it
+  never re-runs on the way back up.
+- **Pair it with the fade.** A counter inside a `data-sc-in` stack rises in with
+  its label and starts ticking as it arrives, which is the one-two that reads
+  as premium. The same numbers static on the page read as a spreadsheet.
+- **Reduced motion writes the final value.** No animation, no zero flash.
+
 **A concept, fictional or pre-launch brand has no verified figures, so it has no
 counters.** The device suits a SaaS or agency page and it will look good in the
 score table, which is exactly the trap: every number you could put in it would
@@ -418,16 +446,25 @@ document sections with a reveal-on-entry are the rest of the page.
 
 ```html
 <section class="sc-section">
-  <div class="sc-wrap sc-stack" data-sc-stagger="70">
+  <div class="sc-wrap sc-stack" data-sc-in data-sc-stagger="70">
     <h2 class="sc-display sc-display--md">What is actually in it</h2>
     <p class="sc-body">…</p>
   </div>
 </section>
 ```
 
-This fires **once**, on entry, via IntersectionObserver. Content that re-hides
-when the reader scrolls back up is a defect, not an effect. Stagger between 30
-and 80ms; longer feels slow.
+`data-sc-in` is what the engine watches; without it nothing fires and the
+stagger children stay hidden. This fires **once**, on entry, via
+IntersectionObserver. Content that re-hides when the reader scrolls back up is
+a defect, not an effect. Stagger between 30 and 80ms; longer feels slow.
+
+**What a premium fade-in is made of.** Opacity from 0 and a rise of about 14px
+over 620ms on an ease-out curve, children staggered so the eye is led down the
+stack in reading order, and the trigger set slightly inside the viewport
+(`-12%` bottom margin) so it fires when the reader is looking, not when the
+first pixel clears the fold. A fade with no rise reads as a loading glitch. A
+rise past 24px reads as a slide. Larger, slower, or bouncier is never more
+premium; the restraint is the signal.
 
 **A flow section directly after a pinned act takes reduced padding.** The pinned
 stage needs a full viewport to scroll off, and full `--sc-section` padding on
